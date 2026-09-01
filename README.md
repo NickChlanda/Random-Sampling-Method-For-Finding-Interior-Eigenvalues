@@ -6,6 +6,7 @@ This program is meant to give researchers a easy method for finding eigenstates 
 
  # What problem this solves
 
+
   If you desire information about specific eigenstates of your system, but your dimension size is much greater than what is possible via exact diagonalizaiton, this method gives you a way around that.
 
   # Example: Testing the weak Eigenstate Thermalization Hypothesis (wETH)
