@@ -86,7 +86,7 @@ inside that window, uses a polynomial filter + a small dense eigensolver to pull
 
 # Command Line
  
-  **Run**: ./ matrix.mtx <gpu_id> <NP> <NT> <max_outer> <target_frac> <mc_target> <ns_max>
+  **Run**: ./ matrixname.mtx <gpu_id> <NP> <NT> <max_outer> <target_frac> <mc_target> <ns_max>
   
   **Example**: ./wETH matrix_out.txt 0 100 300 8 0.5 1 600
 
