@@ -8,7 +8,7 @@ This program is meant to give researchers a easy method for finding eigenstates 
 
   If you desire information about specific eigenstates of your system, but your dimension size is much greater than what is possible via exact diagonalizaiton, this method gives you a way around that.
 
-  # Testing the weak Eigenstate Thermalization Hypothesis (wETH)
+  # Example: Testing the weak Eigenstate Thermalization Hypothesis (wETH)
 
   We apply this method to testing the wETH, more information of our technique can be found here in this paper (cite). However, briefly, we estimate the density of eigenvalues across the whole spectrum (KPM), repeatedly picks a random small energy window somewhere in a desired spectrum (exp. middle 1/3), and
 inside that window, uses a polynomial filter + a small dense eigensolver to pull out the eigenpairs that live there (CFD). It keeps doing this until it has collected as many eigenpairs as you asked for (mc_target), each passing a residual check.
