@@ -52,24 +52,6 @@ inside that window, uses a polynomial filter + a small dense eigensolver to pull
       identical eigenvalues, and append the results to the NetCDF output file.
       [main(), outer refinement loop]
  
-#  Reporting vs. algorithm
-  Several variables in main():
-  
-  sum_rel_res/best_rel_res/worst_rel_res
-  
-  total_duplicates_found/total_dedup_candidates
-  
-  min_lower_use/max_upper_use
-  
-  mc_draw_attempts
-  
-  exist ONLY to build the human-readable summaries printed
-  at the very end of the run. None of them feed back into the algorithm --
-  they just watch numbers that are already being computed and remember a
-  running total/min/max/count for the final printout. If you're trying to
-  understand the eigensolver itself, you can skip over these; they're
-  flagged with comments wherever they appear.
- 
   # Input
 
   A real-symmetric sparse matrix in MatrixMarket coordinate text format
