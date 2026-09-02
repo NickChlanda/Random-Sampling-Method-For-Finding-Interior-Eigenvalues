@@ -22,7 +22,7 @@ Furthermore, if you are interested in Ginkgo, this is a great way to see how to 
    For a visual representation, see flowchartvertical via this repository.
    
  
-   1. Load a sparse matrix A from a MatrixMarket (.mtx / plain text) file.
+   1. Load a sparse matrix A.
    
    2. Spectral bounds: a short Lanczos run + a small tridiagonal eigenproblem
       (LAPACK dstev) gives bounds on lambda_min and lambda_max
@@ -30,22 +30,19 @@ Furthermore, if you are interested in Ginkgo, this is a great way to see how to 
       [lanczos_bounds()]
    
    3. Rescale A to A~ = alphaA + betaI so its whole spectrum maps inside
-      [-1, 1] -- Chebyshev polynomials are well-behaved on that domain.
+      [-1, 1].
       [main(), rescaling block, right after step 2]
   
    4. KPM: estimate the density of states (DOS) of A~ by computing Chebyshev
-      moments of a random vector, damping them with a Jackson kernel (to
-      suppress Gibbs oscillations), and reconstructing a DOS curve on the original energy bounds then
+      moments of a random vector, and reconstructing a DOS curve on the original energy bounds then
       Written to spectrum.txt.
       [compute_chebyshev_moments(), apply_jackson_kernel(), reconstruct_dos()]
   
    5. Monte-Carlo targeting: repeatedly draw a candidate energy from the
-      reconstructed DOS by rejection sampling, so energies in denser parts
-      of the spectrum get proposed more often. 
+      reconstructed DOS by rejection sampling. 
       [main(), Monte-Carlo while loop]
   
-   6. Adaptive window: for each accepted draw, bisect on the integrated DOS
-      to find a half-width so the window is expected to contain a set number of
+   6. Adaptive window: for each accepted draw, create a window that contains a set number of
       eigenvalues (NT); NS = min(2NT, ns_max) random search vectors are sized
       to that window.
       [bisect_half_width(), expected_eigs_window(), integrate_rho()]
@@ -63,21 +60,21 @@ Furthermore, if you are interested in Ginkgo, this is a great way to see how to 
       [rayleigh_ritz()]
   
   10. Repeat: steps 7-10 (up to a set max_outer times) until
-      enough in-window pairs converge below tau_keep. Deduplicate near-
+      enough in-window pairs converge below tau_keep. Remove duplicate near-
       identical eigenvalues, and append the results to the NetCDF output file.
       [main(), outer refinement loop]
  
   # Input
 
-  A real-symmetric sparse matrix in MatrixMarket coordinate text format
-  (see the "matrix.mtx" argument below).
+  A sparse matrix in MatrixMarket coordinate text format.
  
   # Outputs
 
-  **spectrum.txt**: Two columns: energy, normalized DOS value. This is the KPM density-of-states estimate       from step 4, written once near the start of the run.
+  For more information on these, please visit the paper at the top of this README.
 
-                        
-  **ritz_hits_gpu<ID>.nc**:  One "DATA" variable holding, per accepted pair: lambda (the eigenvalue), the residual norm ||Av - lambdav||, and the first component of the Ritz vector v. The full Ritz vector is available in memory (AcceptedPair::vec) if you want to save it too -- see the comment at the NetCDF write loop.
+  **spectrum.txt**: Two columns: energy, normalized DOS value.
+  
+  **ritz_hits_gpu<ID>.nc**:  A array of data per accepted pair: lambda (the eigenvalue), the residual norm ||Av - lambdav||, and the first component of the Ritz vector v. The full Ritz vector is available in memory (AcceptedPair::vec) if you want to save it too see the comment at the NetCDF write loop.
                           
   **(console)**: Progress prints throughout the run (spectral bounds, per-window status, Ritz-pair tables, acceptance/duplicate/subsample counts), plus a final summary block (window coverage, eigenvector count + accuracy, duplicate rate, and timer).
 
@@ -89,15 +86,15 @@ Furthermore, if you are interested in Ginkgo, this is a great way to see how to 
   
   **Example**: ./wETH matrix_out.txt 0 100 200 5 0.5 1000 600
  
-  **matrix.mtx**: real-symmetric sparse matrix, MatrixMarket text format.
+  **matrix.mtx**: sparse matrix, MatrixMarket text format.
   
- **gpu_id**: which CUDA device to use (as reported by nvidia-smi).
+ **gpu_id**: which CUDA device to use.
   
-  **NP**: Chebyshev filter polynomial order (step 7). Higher NP = sharper window edges, but more matrix-vector products per search vector per outer iteration -- scale this to how finely you need to resolve a window relative to the full spectral width, not to N.
+  **NP**: Chebyshev filter polynomial order (step 7). Higher NP = sharper window edges, but more matrix-vector products per search vector per outer iteration.
   
-  **NT**: target number of eigenvalues expected per search window (step 6); also used directly as the residual-table/console label and in the NS_MAX/NS sizing below.
+  **NT**: target number of eigenvalues expected per search window (step 6).
   
-  **max_outer**: max number of filter/SVQB/Rayleigh-Ritz refinement cycles to try per window (step 9) before giving up on that window and moving to the next Monte-Carlo draw.
+  **max_outer**: max number of filter/SVQB/Rayleigh-Ritz refinement cycles to try per window (step 9) before moving onto the next Monte-Carlo draw.
   
   **target_frac**: fraction (0,1] of the whole spectrum covered by the single global sampling window that Monte-Carlo draws are pulled from (computed once, before the per-window search begins). exp: 0.5 will contain half of the spectrum centered on zero
   
