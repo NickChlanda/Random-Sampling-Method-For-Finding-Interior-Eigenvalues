@@ -67,6 +67,8 @@ inside that window, uses a polynomial filter + a small dense eigensolver to pull
   **(console)**: Progress prints throughout the run (spectral bounds, per-window status, Ritz-pair tables, acceptance/duplicate/subsample counts), plus a final summary block (window coverage, eigenvector count + accuracy, duplicate rate, and timer).
 
 # Command Line
+
+**Compile**: "make" in terminal which uses Makefile
  
   **Run**: ./ matrixname.mtx <gpu_id> <NP> <NT> <max_outer> <target_frac> <mc_target> <ns_max>
   
