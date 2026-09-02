@@ -15,6 +15,8 @@ This program is meant to give researchers a easy method for finding eigenstates 
 inside that window, uses a polynomial filter + a small dense eigensolver to pull out the eigenpairs that live there (CFD). It keeps doing this until it has collected as many eigenpairs as you asked for (mc_target), each passing a residual check.
  
  # The 10-step pipeline
+
+   For a visual representation, see flowchartvertical via this repository.
  
    1. Load a sparse matrix A from a MatrixMarket (.mtx / plain text) file.
    2. Spectral bounds: a short Lanczos run + a small tridiagonal eigenproblem
