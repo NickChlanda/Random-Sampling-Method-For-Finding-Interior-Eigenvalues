@@ -17,38 +17,48 @@ inside that window, uses a polynomial filter + a small dense eigensolver to pull
  # The 10-step pipeline
 
    For a visual representation, see flowchartvertical via this repository.
+   
  
    1. Load a sparse matrix A from a MatrixMarket (.mtx / plain text) file.
+   
    2. Spectral bounds: a short Lanczos run + a small tridiagonal eigenproblem
       (LAPACK dstev) gives bounds on lambda_min and lambda_max
       of A.
       [lanczos_bounds()]
+   
    3. Rescale A to A~ = alphaA + betaI so its whole spectrum maps inside
       [-1, 1] -- Chebyshev polynomials are well-behaved on that domain.
       [main(), rescaling block, right after step 2]
+  
    4. KPM: estimate the density of states (DOS) of A~ by computing Chebyshev
       moments of a random vector, damping them with a Jackson kernel (to
       suppress Gibbs oscillations), and reconstructing a DOS curve on the original energy bounds then
       Written to spectrum.txt.
       [compute_chebyshev_moments(), apply_jackson_kernel(), reconstruct_dos()]
+  
    5. Monte-Carlo targeting: repeatedly draw a candidate energy from the
       reconstructed DOS by rejection sampling, so energies in denser parts
       of the spectrum get proposed more often. 
       [main(), Monte-Carlo while loop]
+  
    6. Adaptive window: for each accepted draw, bisect on the integrated DOS
       to find a half-width so the window is expected to contain a set number of
       eigenvalues (NT); NS = min(2NT, ns_max) random search vectors are sized
       to that window.
       [bisect_half_width(), expected_eigs_window(), integrate_rho()]
+  
    7. Chebyshev window filter: a degree-NP polynomial
       is applied to all NS search vectors, suppressing everything outside
       the window and amplifying what's inside.
       [build_window_coefficients(), chebyshev_filter_pass()]
+ 
   8. SVQB: orthonormalizes the filtered block.
       [svqb()]
+ 
   9. Rayleigh-Ritz + accept: project A onto the orthonormal block, get
       Ritz pairs + residuals
       [rayleigh_ritz()]
+  
   10. Repeat: steps 7-10 (up to a set max_outer times) until
       enough in-window pairs converge below tau_keep. Deduplicate near-
       identical eigenvalues, and append the results to the NetCDF output file.
