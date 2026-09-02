@@ -1,8 +1,8 @@
 # A Method for Finding Eigenstates Near an Energy of Interest: An Example
 
-This repository is intended to be supplementary material for paper : (paper goes here). 
+This repository is intended to be supplementary material for paper : (paper goes here). If you find this prior to paper submission, please email me at nchlandaATbrynmawr.edu
 
-This program is meant to give researchers a easy method for finding eigenstates near an energy of interest for large sparse hamiltonians, ones too large for exact diagonalization, using Ginkgo (cite). However, this code also contains The Kernel Polynomial Method (paper here) and Chebyshev Filter Diagonalization (paper here) if you would just like to use our implementation of Ginkgo for those methods specifically. 
+This program is meant to give researchers a easy method for finding eigenstates near an energy of interest for large *sparse* hamiltonians, ones too large for exact diagonalization, using Ginkgo (https://github.com/ginkgo-project/ginkgo). However, this code also contains The Kernel Polynomial Method (RevModPhys.78.275) and Chebyshev Filter Diagonalization (j.jcp.2016.08.027) if you would just like to use our implementation of Ginkgo for those methods specifically. 
 
  # What problem this solves
 
@@ -108,44 +108,8 @@ inside that window, uses a polynomial filter + a small dense eigensolver to pull
   
   **ns_max**: hard cap on the number of Chebyshev-filtered search vectors per window; NS = min(2NT, ns_max). Pick this to fit your GPU's memory (each search vector is N doubles).
 
-  # Compiling 
+  # Libraries Required
 
-  A list of libraries required to run this program:
-
--L/usr/lib64 
-
--L/usr/local/lib 
-
--L/usr/local/cuda/lib64 
-
--L/opt/intel/oneapi/mkl/latest/lib/intel64 
-
--L/opt/intel/oneapi/compiler/latest/linux/compiler/lib/intel64_lin
-
--lnetcdf 
-
--lmkl_intel_thread 
-
--lginkgo 
-
--lginkgo_omp 
-
--lginkgo_cuda 
-
--lginkgo_reference 
-
--lginkgo_dpcpp 
-
--lginkgo_device 
-
--lcuda
-
--liomp5
-
--lginkgo_hip 
-
--lmkl_core 
-
--lmkl_gf_ilp64
+  To run this program you will need *Ginkgo* and *Lapack*. Ginkgo is an high-performance numerical linear algebra library with a focus on sparse linear systems, we use this to handle all matrix vector multiplication, scaling and overall handeling of vectors and matricies. We use Lapack to solve small eigenproblems.
 
 
