@@ -62,7 +62,7 @@ inside that window, uses a polynomial filter + a small dense eigensolver to pull
   **spectrum.txt**: Two columns: energy, normalized DOS value. This is the KPM density-of-states estimate       from step 4, written once near the start of the run.
 
                         
-  **ritz_hits_gpu<ID>.nc**:  One "DATA" variable holding, per accepted pair: lambda (the eigenvalue), the residual norm ||Av - lambdav||, and the first component of the Ritz vector v. The full Ritz vector is available in memory (AcceptedPair::vec) if you want to persist it too -- see the comment at the NetCDF write loop.
+  **ritz_hits_gpu<ID>.nc**:  One "DATA" variable holding, per accepted pair: lambda (the eigenvalue), the residual norm ||Av - lambdav||, and the first component of the Ritz vector v. The full Ritz vector is available in memory (AcceptedPair::vec) if you want to save it too -- see the comment at the NetCDF write loop.
                           
   **(console)**: Progress prints throughout the run (spectral bounds, per-window status, Ritz-pair tables, acceptance/duplicate/subsample counts), plus a final summary block (window coverage, eigenvector count + accuracy, duplicate rate, and timer).
 
