@@ -1,4 +1,4 @@
-# A Method for Finding Eigenstates Near an Energy of Interest: An Example
+# A Method for Finding Eigenstates Near an Energy of Interest For Large Sparse Matrices: An Example
 
 This repository is intended to be supplementary material for paper : (paper goes here). If you find this prior to paper submission, please email me at nchlandaATbrynmawr.edu
 
