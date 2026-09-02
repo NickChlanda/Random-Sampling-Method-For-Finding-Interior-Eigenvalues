@@ -68,7 +68,7 @@ inside that window, uses a polynomial filter + a small dense eigensolver to pull
 
 # Command Line
 
-**Compile**: "make" in terminal which uses Makefile
+  **Compile**: "make" in terminal which uses Makefile
  
   **Run**: ./ matrixname.mtx <gpu_id> <NP> <NT> <max_outer> <target_frac> <mc_target> <ns_max>
   
