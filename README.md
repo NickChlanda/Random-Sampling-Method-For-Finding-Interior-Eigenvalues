@@ -2,7 +2,7 @@
 
 This repository is intended to be supplementary material for paper : (paper goes here). If you find this prior to paper submission, please email me at nchlandaATbrynmawr.edu
 
-This program is meant to give researchers a easy method for finding eigenstates near an energy of interest for large *sparse* hamiltonians, ones too large for exact diagonalization, using Ginkgo (https://github.com/ginkgo-project/ginkgo). However, this code also contains The Kernel Polynomial Method (KPM) (RevModPhys.78.275) and Chebyshev Filter Diagonalization (CFD)(j.jcp.2016.08.027) if you would just like to use our implementation of Ginkgo for those methods specifically. 
+This program is meant to give researchers a easy method for finding eigenstates near an energy of interest for large *sparse* hamiltonians, ones too large for exact diagonalization, using Ginkgo (https://github.com/ginkgo-project/ginkgo). However, this code also contains The Kernel Polynomial Method (KPM) (RevModPhys.78.275) and Chebyshev Filter Diagonalization (CFD) (j.jcp.2016.08.027) if you would just like to use our implementation of Ginkgo for those methods specifically. 
 
  # What problem this solves
 
